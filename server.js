@@ -13,20 +13,6 @@ const collectibles = [
 
 
 
-
-  const shoes = [
-    { name: "Birkenstocks", price: 50, type: "sandal" },
-    { name: "Air Jordans", price: 500, type: "sneaker" },
-    { name: "Air Mahomeses", price: 501, type: "sneaker" },
-    { name: "Utility Boots", price: 20, type: "boot" },
-    { name: "Velcro Sandals", price: 15, type: "sandal" },
-    { name: "Jet Boots", price: 1000, type: "boot" },
-    { name: "Fifty-Inch Heels", price: 175, type: "heel" }
-];
-
-
-
-
 app.get(`/name`, (request, response) => {
     const name = request.params.name;
     response.send(`Hello there ${name}!`);
@@ -46,6 +32,21 @@ app.get(`/roll/:number`, (request, response) => {
     console.log(number);
     response.send(`You rolled a ${randomNumber}`);
 });
+
+
+
+
+app.get(`/collectibles/:index`, (request, response) => {
+    const index = request.params.index;
+
+    if (isNaN(index) || index < 0 || index >= collectibles.length) {
+        return response.send(`This item is not yet in stock. Check back soon!`);
+    }
+
+    const collectible = collectibles[index]
+    response.send(`So, you want the ${collectible.name}? For ${collectible.price}, it can be yours!`);
+});
+
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');
